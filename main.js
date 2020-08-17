@@ -8,10 +8,16 @@ document.getElementById('search').addEventListener('click',function(){
     .catch((error) => {
         const songsList = document.getElementById('songs-list');
         songsList.innerHTML = '';
-        songsList.innerHTML = 'result not found';
+        songsList.innerHTML = `<div class="search-result col-md-8 mx-auto py-2">
+        <div class="single-result row align-items-center p-3">
+            <div class="text-center col-md-9">
+                <h3 class="result-padding lyrics-name">Result not found</h3>
+            </div>
+        </div>
+        </div>`
     });
 })
-
+//search song & showed result  
 const searchResult = data=>{
     const songsList = document.getElementById('songs-list');
     songsList.innerHTML = '';
@@ -26,16 +32,19 @@ const searchResult = data=>{
         <div class="col-md-3 text-md-right text-center">
             <button onclick="lyrics('${data.data[i].title}','${data.data[i].artist.name}')" class="btn btn-success">Get Lyrics</button>
         </div>
+    </div>
     </div>`;
     }   
     document.getElementById('fancy-results').innerHTML = '';
 }
+//fetch lyrics part
 const lyrics = (titleName,artistName)=>{ 
     const lyricsApi = `https://api.lyrics.ovh/v1/${artistName}/${titleName}`
     fetch(lyricsApi)
     .then(response => response.json())
     .then(data => showLyrics(data,titleName,artistName))
 }
+//lyrics presentation part
 const showLyrics = (data,titleName,artistName)=>{
     if(data.error == 'No lyrics found'){
         document.getElementById('song-title').innerHTML = 'Lyrics not found';
