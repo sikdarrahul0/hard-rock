@@ -16,8 +16,19 @@ const searchResult = data=>{
     const songsList = document.getElementById('songs-list');
     songsList.innerHTML = '';
     for(let i = 0; i < 10; i++){
-    songsList.innerHTML += `<p class="author lead"><strong>${data.data[i].title}</strong> Album by <span>${data.data[i].album.title}</span> <button onclick="lyrics('${data.data[i].title}','${data.data[i].artist.name}')" class="btn btn-success">Get Lyrics</button></p>`;
+    songsList.innerHTML += ` <div class="search-result col-md-8 mx-auto py-2">
+    <div class="single-result row align-items-center p-3">
+        <div class="col-md-9">
+            <h3 class="lyrics-name">${data.data[i].title}</h3>
+            <p class="author lead">Album by <span>${data.data[i].album.title}</span></p>
+            <p class="author lead">Artist: <span> ${data.data[i].artist.name}</span></p>
+        </div>
+        <div class="col-md-3 text-md-right text-center">
+            <button onclick="lyrics('${data.data[i].title}','${data.data[i].artist.name}')" class="btn btn-success">Get Lyrics</button>
+        </div>
+    </div>`;
     }   
+    document.getElementById('fancy-results').innerHTML = '';
 }
 const lyrics = (titleName,artistName)=>{ 
     const lyricsApi = `https://api.lyrics.ovh/v1/${artistName}/${titleName}`
